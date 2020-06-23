@@ -1,0 +1,328 @@
+* {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 16px;
+}
+
+.beregner {
+    width: 1000px;
+    margin: auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 32px;
+    line-height: 50px;
+}
+
+.beregner_row-1 {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    background: #00dd00dd;
+    border-bottom: solid 1px black;
+}
+.beregner_row-1_rows {
+    display: grid;
+    grid-template-rows: repeat(8, 30px);
+}
+
+/* column 1 */
+
+.row-1_column-1 {
+    grid-column: 1 / 2;
+    grid-row-start: 1;
+}
+
+.row-1_column-1 p {
+    grid-row: 1 / 2;
+}
+
+.reg-dato {
+    grid-row: 3 / 4;
+}
+
+.total-km {
+    grid-row: 4 / 5;
+}
+
+.new-price {
+    grid-row: 7 / 8;
+}
+
+/* column 2 */
+
+.row-1_column-2 {
+    grid-column: 2 / 3;
+    grid-row-start: 1;
+}
+
+#platetype {
+    grid-row: 1 / 2;
+}
+
+.row-1-column-2-year {
+    grid-row: 2 / 3;
+}
+
+#reg-dato {
+    grid-row: 3 / 4;
+}
+
+#total-km {
+    grid-row: 4 / 5;
+}
+
+.nypris-text {
+    grid-row: 6 / 7;
+}
+
+#nyprisberegner-1 {
+    grid-row: 7 / 8;
+}
+
+
+/* column 3 */
+
+.row-1_column-3 {
+    grid-column: 3 / 4;
+    grid-row-start: 1;
+}
+
+.row-1_column-3 span{
+    grid-row: 6 / 7;
+}
+
+#nyprisberegner-2 {
+    grid-row: 7 / 8;
+    
+}
+
+
+/* column 4 */
+
+.row-1_column-4 {
+    grid-column: 4 / 5;
+    grid-row-start: 1;
+}
+
+.vehicle-state {
+    grid-row: 3 / 4;
+}
+
+.special-use {
+    grid-row: 4 / 5;
+}
+
+
+/* column 5 */
+
+.row-1_column-5 {
+    grid-column: 5 / 6;
+    grid-row-start: 1;
+
+}
+
+.udfyldes {
+    grid-row: 1/2;
+}
+
+#vehicle-state-select {
+    grid-row: 3/4;
+}
+
+#special-use-select {
+    grid-row: 4/5;
+}
+
+.nypris-result {
+    grid-row: 7/8;
+}
+
+
+/* row 2 start */
+.beregner_row-2 {
+    display: flex;
+    flex-direction: column;
+    background: #00aa00;
+    width: 100%;
+}
+
+.row-2_row-1 {
+    padding: 16px 16px 5px 16px;
+}
+
+.row-2_row-2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 0px;
+    position: relative;
+    background: red;
+}
+
+.row-2_row-2 span {
+    position: absolute;
+    left: 16px;
+}
+
+.row-2_row-2 div {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+
+
+.row-2_row-3 {
+    display: flex;
+    flex-direction: column;
+}
+
+.other-regulations-wrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+#other-regulations::before {
+    display: block;
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background: black;
+    
+}
+
+#other-remark {
+    height: 4em;
+}
+
+.price-calculated {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+/*  beregner row 3 */
+
+.beregner_row-3 {
+   display: flex;
+   flex-direction: column;
+}
+
+.row-3_row-1 {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    background: black;
+    border-bottom: 1px solid red;
+}
+
+.row-3_row-1_columns {
+    display: grid;
+    grid-template-rows: repeat(5, 30px);
+    grid-gap: 1px;
+}
+
+.row-3_row-1-el {
+    background: #006aba;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 16px;
+}
+
+/* row 1 */
+
+.row-3_row-1_column-1 {
+    grid-column: 1 / 2;
+
+}
+
+.row-3_row-1_column-1_el-1 {
+    grid-row: 1 / 2;
+}
+
+.row-3_row-1_column-1_el-2 {
+    grid-row: 3/4;
+}
+
+.row-3_row-1_column-1_el-3 {
+    grid-row: 4/5;
+}
+
+.row-3_row-1_column-1_el-4 {
+    grid-row: 5/6;
+}
+/* row 2 */
+
+.row-3_row-1_column-2 {
+    grid-column-start: 2;
+    
+}
+
+.row-3_row-1_column-2_el-1 {
+    grid-row: 2/3;
+}
+
+.row-3_row-1_column-2_el-2 {
+    grid-row: 4/5;
+}
+
+/* row 3 */
+
+.row-3_row-1_column-3 {
+    grid-column: 3 / 4;
+}
+
+.row-3_row-1_column-3_el-1 {
+    grid-row: 2/3;
+}
+
+.row-3_row-1_column-3_el-2 {
+    grid-row: 4/5;
+}
+
+.row-3_row-1_column-3_el-3 {
+    grid-row: 5/6;
+}
+
+/* row 4     */
+
+.row-3_row-1_column-4 {
+    grid-column: 4 / 5;
+    grid-row-start: 1;
+   
+}
+
+.row-3_row-1_column-4_el-1 {
+    grid-row: 2/3;
+}
+
+.row-3_row-1_column-4_el-2 {
+    grid-row: 3/4;
+}
+
+.row-3_row-1_column-4_el-3 {
+    grid-row: 5/6;
+}
+
+
+/* .beregner_row-3 row 2 */
+
+.row-3_row-2 div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted black;
+    background: #006aba;
+}
+
+.row-3_row-2 div p{
+    line-height: 30px;
+    padding: 0px 16px;
+}
