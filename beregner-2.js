@@ -1,18 +1,107 @@
-document.addEventListener('keyup', function(event){
-    if (event.keyCode === 13) {
 
-       function salesPrice(input, relDeduction, constDeduction){
-           return input * relDeduction + constDeduction;
+        function addAdvert(){
+            let index = 1;
+            let adverts = document.querySelector('.adverts')
+            
+            let newAdvert = document.createElement('div');
+            newAdvert.className = 'newAdvert';
+            let advertArray = document.querySelectorAll('.newAdvert');
+
+            advertArray.forEach(()=>{
+                index++;
+                console.log(index);
+            })
+
+            let carElement = document.createElement('span');
+            carElement.className = 'carElement';
+            CarElementText = document.createTextNode('Bil ' + index)
+            carElement.appendChild(CarElementText);            
+
+
+
+            let advertPrice = document.createElement('input');
+            advertPrice.className = 'advertPrice'
+            advertPrice.placeholder = 'udsalgspris';
+            advertPrice.type = 'number';
+           
+           let advertKm = document.createElement('input');
+           advertKm.className = 'advertKm';
+           advertKm.placeholder = 'Kørte kilometer'
+           advertKm.type = 'number'
+        
+           adverts.appendChild(newAdvert);
+           newAdvert.appendChild(carElement);
+           newAdvert.appendChild(advertPrice);
+           newAdvert.appendChild(advertKm);
+
+        }
+
+
+        function normKmCalc() {
+            let inputValue = document.querySelectorAll('.advertKm');
+            let kmArray = [];
+            
+            inputValue.forEach(input=>{
+                if (input.value == "") {
+                    input.style.background = '#5a5';
+                } else {
+                    input.style.background = '#fff'
+                    kmArray.push(parseInt(input.value));
+                }
+            })
+
+            let kmSum = 0;
+            kmArray.forEach(km=>{
+                kmSum +=km
+            })
+
+            let averageKm = kmSum/kmArray.length
+            return Math.floor(averageKm)
+
+        }
+
+        function averagePriceCalc() {
+            let inputValue = document.querySelectorAll('.advertPrice');
+            let priceArray = [];
+            
+                inputValue.forEach(input=>{
+
+                    if (input.value == "") {
+                        input.style.background = '#5a5';
+                    } else {
+                        input.style.background = '#fff';
+                        priceArray.push(parseInt(input.value))
+                    }
+                    
+                })
+            
+            let priceSum = 0;
+            priceArray.forEach(price=>{
+                priceSum += price;
+            })
+            let averagePrice = priceSum/priceArray.length
+           // console.log(priceArray, averagePrice)
+            return Math.floor(averagePrice)
+           
+        }
+
+        
+
+
+
+       function salesPrice(averagePrice, relDeduction, constDeduction){
+           return averagePrice * relDeduction + constDeduction;
        }
 
        function salesPriceCalc(){
-           let inputValue = document.getElementById('average-price').value;
-            let relDeductionField = document.querySelector('.row-3_row-1_column-3_el-2');
-            relDeductionField.innerHTML = inputValue * -0.05;
+            let averagePrice = averagePriceCalc();
+
+           let relDeductionField = document.querySelector('.row-3_row-1_column-3_el-2');
+           relDeductionField.innerHTML = averagePrice * -0.05;
            let relDeduction = 0.95;
-           let constDeduction = -2000
+            let constDeduction = -2000
            let salesPriceField = document.querySelector('.row-3_row-1_column-4_el-3');
-           salesPriceResult = salesPrice(inputValue, relDeduction, constDeduction);
+           salesPriceResult = salesPrice(averagePrice, relDeduction, constDeduction);
            salesPriceField.textContent = salesPriceResult;
            return salesPriceResult;
            
@@ -47,6 +136,7 @@ document.addEventListener('keyup', function(event){
            return (returnAmount > -20000) ? returnAmount: -20000;
           
        }
+
 
 
        function kmRegulation(){
@@ -92,7 +182,7 @@ document.addEventListener('keyup', function(event){
             }
 
            function kmCalc(){
-               let normKm = parseInt(document.getElementById('average-km').value);
+               let normKm = normKmCalc();
                let carKm = parseInt(document.getElementById('total-km').value);
                let salesPrice = salesPriceCalc();
                let yearFactor = carAgeFactor();
@@ -193,6 +283,12 @@ document.addEventListener('keyup', function(event){
            estTollField.innerHTML = Math.floor(finalPrice()*0.58);
        }
 
-       estToll();
+
+
+
+
+document.addEventListener('keyup', function(event){
+    if (event.keyCode === 13) {
+        estToll();
     }
 })

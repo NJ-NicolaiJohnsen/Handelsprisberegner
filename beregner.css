@@ -166,16 +166,16 @@ input {
     background: red;
 }
 
-.annoucementCar {
+.newAdvert {
     padding-left: 20px;
-    
+    padding-bottom: 10px;
 }
 
-.annoucementCar input {
+.newAdvert input {
     margin-right: 10px;
 }
 
-.annoucementCar span {
+.newAdvert span {
     font-size: 20px;
     margin-right: 10px;
 }
