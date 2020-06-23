@@ -26,8 +26,8 @@
            
            let advertKm = document.createElement('input');
            advertKm.className = 'advertKm';
-           advertKm.placeholder = 'Kørte kilometer'
-           advertKm.type = 'number'
+           advertKm.placeholder = 'Kørte kilometer';
+           advertKm.type = 'number';
         
            adverts.appendChild(newAdvert);
            newAdvert.appendChild(carElement);

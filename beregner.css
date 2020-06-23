@@ -162,7 +162,7 @@ input {
 
 .adverts{
     padding: 16px 0px;
-    position: relative;
+    position: absolute;
     background: red;
 }
 
