@@ -9,12 +9,12 @@
 
             advertArray.forEach(()=>{
                 index++;
-                console.log(index);
+               
             })
 
             let registeredDate = document.createElement('input');
             registeredDate.type = 'number';
-            registeredDate.placeholder = 'Registereingsdato'
+            registeredDate.placeholder = 'Årgang 1. registering'
             registeredDate.className = 'registeredDate';
 
 
@@ -43,30 +43,49 @@
 
         }
 
-        
+        function yearKmRegulation(){
+            let thisYear = 2020;
+            let registrationYear = document.querySelectorAll('.registeredDate');
+            let kmInput = document.querySelectorAll('.advertKm');
+            let myCarYear = thisYear - (new Date(document.getElementById('reg-dato').value).getFullYear());
+            let yearArray = [];
 
-        function normKmCalc() {
-            let inputValue = document.querySelectorAll('.advertKm');
-            let kmArray = [];
-            
-            inputValue.forEach(input=>{
+            kmInput.forEach(input=>{
                 if (input.value == "") {
                     input.style.background = '#5a5';
                 } else {
                     input.style.background = '#fff'
-                    kmArray.push(parseInt(input.value));
+                    
+                }
+            })
+           
+            registrationYear.forEach(year=>{
+                if (year.value == ""){
+                    year.style.background = '#5a5';
+                }else {
+                    year.style.background = '#fff';
+                    yearArray.push(thisYear-year.value);
                 }
             })
 
+            let regulatedKmNumber = [];
+            
+            for (i=0; i < yearArray.length; i++){
+                regulatedKmNumber.push( ( kmInput[i].value / yearArray[i] ) * myCarYear)
+                
+            }
+
             let kmSum = 0;
-            kmArray.forEach(km=>{
-                kmSum +=km
+
+            regulatedKmNumber.forEach(km=>{
+                kmSum+=km;
             })
 
-            let averageKm = kmSum/kmArray.length
-            return Math.floor(averageKm)
-
+            let averageKm = Math.floor(kmSum/regulatedKmNumber.length)
+          //  console.log(kmSum)
+            return averageKm;
         }
+
 
         function averagePriceCalc() {
             let inputValue = document.querySelectorAll('.advertPrice');
@@ -190,7 +209,7 @@
             }
 
            function kmCalc(){
-               let normKm = normKmCalc();
+               let normKm = yearKmRegulation();
                let carKm = parseInt(document.getElementById('total-km').value);
                let salesPrice = salesPriceCalc();
                let yearFactor = carAgeFactor();
@@ -254,14 +273,14 @@
         function otherRegulationFunction() {
             
             let inputValue = parseInt(document.querySelector('#other-regulations').value)
-            if (inputValue = "") {
+            if (inputValue == "") {
                 inputValue = 0;
             
             }
             let salesPrice = salesPriceCalc();
             document.querySelector('.row-3_row-2_row-4_el-2').innerHTML = inputValue + "%"
             document.querySelector('.row-3_row-2_row-4_el-4').innerHTML = salesPrice * (inputValue/100);
-            
+            console.log(inputValue)
             return salesPrice * (inputValue/100);
 
         }
