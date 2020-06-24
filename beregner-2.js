@@ -1,7 +1,7 @@
 
         function addAdvert(){
             let index = 1;
-            let adverts = document.querySelector('.adverts')
+            let adverts = document.querySelector('.ads')
             
             let newAdvert = document.createElement('div');
             newAdvert.className = 'newAdvert';
@@ -26,7 +26,7 @@
            
            let advertKm = document.createElement('input');
            advertKm.className = 'advertKm';
-           advertKm.placeholder = 'Kørte kilometer'
+           advertKm.placeholder = 'Norm km'
            advertKm.type = 'number'
         
            adverts.appendChild(newAdvert);
