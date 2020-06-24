@@ -12,6 +12,12 @@
                 console.log(index);
             })
 
+            let registeredDate = document.createElement('input');
+            registeredDate.type = 'number';
+            registeredDate.placeholder = 'Registereingsdato'
+            registeredDate.className = 'registeredDate';
+
+
             let carElement = document.createElement('span');
             carElement.className = 'carElement';
             CarElementText = document.createTextNode('Bil ' + index)
@@ -26,16 +32,18 @@
            
            let advertKm = document.createElement('input');
            advertKm.className = 'advertKm';
-           advertKm.placeholder = 'Norm km'
+           advertKm.placeholder = 'Kilometertal'
            advertKm.type = 'number'
         
            adverts.appendChild(newAdvert);
            newAdvert.appendChild(carElement);
+           newAdvert.appendChild(registeredDate);
            newAdvert.appendChild(advertPrice);
            newAdvert.appendChild(advertKm);
 
         }
 
+        
 
         function normKmCalc() {
             let inputValue = document.querySelectorAll('.advertKm');
