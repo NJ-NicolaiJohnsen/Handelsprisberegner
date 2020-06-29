@@ -7,9 +7,15 @@ function addAdvert(){
 
 
     let newAdvert = existingAdvert.cloneNode(true);
+    
 
     adverts.appendChild(newAdvert)
 
+    let newAdvertChildren = newAdvert.children;
+    
+    for (i = 0; i < newAdvertChildren.length; i++) {
+        newAdvertChildren[i].value = '';
+    }
 
 }
 
