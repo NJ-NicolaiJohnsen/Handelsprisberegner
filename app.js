@@ -189,10 +189,75 @@ function doCalculations(inputs){
 
     function kmRegulation(){
         
+
+        function kmDifference(avgKm, myCarKm){
+            let difference = avgKm-myCarKm;
+            return difference;
+        }
+
+        function kmDeviation(avgKm, myCarKm){
+            let deviation = (avgKm - myCarKm) / avgKm;
+            return deviation;
+        }
+
+        function ageRate(age){
+            
+            let rates = [0.31, 0.22, 0.20, 0.17];
+            age = (age < 3) ? age: 3;
+            return rates[age];
+        }
+        
+        function priceLevel(avgPrice, kmDif, ageRate){
+            let priceLevel =  avgPrice/100000*kmDif*ageRate;
+            return priceLevel;
+        }
+
+        function priceLevel10(avgPrice, kmDeviation){
+            let priceLevel10 = 0;
+            priceLevel10 = (kmDeviation > 0) ? avgPrice*0.10 : avgPrice *  -0.10;
+            return priceLevel10;
+        }
+        
+        function priceLevel50(priceLevel, priceLevel10){
+            return (priceLevel - priceLevel10) * 0.5;
+        }
+
+        function calcRegulation(){
+            let age = myCarYearMonth();
+            let avgPrice = averageSalesPrice();
+            let avgKm = averageKilometers();
+            let myCarKm = data.myCarKm;
+            let kmDif = kmDifference(avgKm, myCarKm);
+            let deviation = kmDeviation(avgKm, myCarKm); 
+            let pLevel = priceLevel(avgPrice, kmDif, ageRate(age));
+            let pLevel10 = priceLevel10(avgPrice, deviation)
+            let pLevel50 = priceLevel50(pLevel, pLevel10)
+
+            // if priceLevel is over 10 % of market price 
+            let overTenPercentOfPrice = pLevel10 + pLevel50;
+            
+        }
+
+        return calcRegulation();
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+    
+
 
     function finalPrice(){
-        let price = deductedPrice()+optionalsCalc()+conditionAndUse();
+        let price = deductedPrice()+optionalsCalc()+conditionAndUse()+kmRegulation();
         return price;
     }
 

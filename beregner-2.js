@@ -229,7 +229,7 @@ function kmRegulation(){
         return (priceLevel - priceLevel10)/2;
     }
 
-    function kmDeduction(priceLevel10, priceLevel50){
+    function kmDeduction(riceLevepl10, priceLevel50){
         return  priceLevel10 + priceLevel50;
     }
 
