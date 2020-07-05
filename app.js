@@ -23,6 +23,7 @@ function addAdvert(){
     })
         
 }
+
 //INPUTS ----------------------------------------------------------------------------------
 function getInputs(){
     let adverts = [];
@@ -153,11 +154,11 @@ function doCalculations(inputs){
     }
 
     function deductedPrice(){
-        let marketPrice = averageSalesPrice();
+        let avgPrice = averageSalesPrice();
         let fivePercent = fivePercentDeduction();
         const constant = -2000;
         
-        let afterDeductions = marketPrice + fivePercent+constant;
+        let afterDeductions = avgPrice + fivePercent+constant;
         return afterDeductions;
     }
 
@@ -165,7 +166,12 @@ function doCalculations(inputs){
 
     function carCondition(marketPrice, percent){
         let result = marketPrice * percent;
-        return (result > -20000) ? result : -20000;
+        if (result > 8000) {
+            return 8000
+        } else {
+            return (result > -20000) ? result : -20000;
+        }
+        
     }
 
     function specialUse(marketPrice, percent) {
@@ -175,10 +181,10 @@ function doCalculations(inputs){
     }
 
     function conditionAndUse(){
-        let marketPrice = averageSalesPrice();
+        let marketPrice = deductedPrice();
         let conditionPercent = data.carCondition;
         let specialUsePercent = data.specialUse;
-
+        
         let conditionAmount = carCondition(marketPrice, conditionPercent);
         let specialUseAmount = specialUse(marketPrice, specialUsePercent);
         
@@ -207,14 +213,14 @@ function doCalculations(inputs){
             return rates[age];
         }
         
-        function priceLevel(avgPrice, kmDif, ageRate){
-            let priceLevel =  avgPrice/100000*kmDif*ageRate;
+        function priceLevel(marketPrice, kmDif, ageRate){
+            let priceLevel =  marketPrice/100000*kmDif*ageRate;
             return priceLevel;
         }
 
-        function priceLevel10(avgPrice, kmDeviation){
+        function priceLevel10(marketPrice, kmDeviation){
             let priceLevel10 = 0;
-            priceLevel10 = (kmDeviation > 0) ? avgPrice*0.10 : avgPrice *  -0.10;
+            priceLevel10 = (kmDeviation > 0) ? marketPrice*0.10 : marketPrice *  -0.10;
             return priceLevel10;
         }
         
@@ -224,53 +230,92 @@ function doCalculations(inputs){
 
         function calcRegulation(){
             let age = myCarYearMonth();
-            let avgPrice = averageSalesPrice();
+            let marketPrice = deductedPrice();
             let avgKm = averageKilometers();
             let myCarKm = data.myCarKm;
             let kmDif = kmDifference(avgKm, myCarKm);
             let deviation = kmDeviation(avgKm, myCarKm); 
-            let pLevel = priceLevel(avgPrice, kmDif, ageRate(age));
-            let pLevel10 = priceLevel10(avgPrice, deviation)
+            let pLevel = priceLevel(marketPrice, kmDif, ageRate(age));
+            let pLevel10 = priceLevel10(marketPrice, deviation)
             let pLevel50 = priceLevel50(pLevel, pLevel10)
-
             // if priceLevel is over 10 % of market price 
             let overTenPercentOfPrice = pLevel10 + pLevel50;
             
+            if (age < 10) {
+                if (deviation < 0.1 && deviation > -0.1) {
+                    return 0;
+                } else {
+                    if (kmDif > 0){
+                        if (pLevel < pLevel10) {
+                            return pLevel;
+                        } else {
+                            return overTenPercentOfPrice;
+                        }
+                    } else {
+                        if (pLevel > pLevel10) {
+                            return pLevel;
+                        } else {
+                            return overTenPercentOfPrice;
+                        }
+                    }
+                }
+            }
+             else {
+                if (deviation < 0.33 && deviation > -0.33) {
+                    return 0;
+                } else {
+                    if (kmDif > 0){
+                        if (pLevel < pLevel10) {
+                            return pLevel;
+                        } else {
+                            return overTenPercentOfPrice;
+                        }
+                    } else {
+                        if (pLevel > pLevel10) {
+                            return pLevel;
+                        } else {
+                            return overTenPercentOfPrice;
+                        }
+                    }
+                }
+            }
         }
 
         return calcRegulation();
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
     
 
+    function otherRegulations(){
+        let percent = data.other/100;
+        let marketPrice = deductedPrice();
+
+        
+        let results = {
+            otherRegulationSum: marketPrice*percent,
+            percent: data.other
+        }
+        return results;
+    }
 
     function finalPrice(){
-        let price = deductedPrice()+optionalsCalc()+conditionAndUse()+kmRegulation();
+        let price = deductedPrice()+optionalsCalc()+conditionAndUse()+kmRegulation()+otherRegulations().otherRegulationSum;
         return price;
     }
 
-    finalPrice()
+    function estimatedToll(){
+        return finalPrice()*0.57;
+    }
 
     let outputs = {
         finalPrice: finalPrice(),
         avgPrice:  averageSalesPrice(),
         optionals: optionalsCalc(),
-        deductedPrice: deductedPrice(),
+        marketPrice: deductedPrice(),
         fivePercent: fivePercentDeduction(),
-        conditionAndUse: conditionAndUse()
-
+        conditionAndUse: conditionAndUse(),
+        kmRegulation: kmRegulation(),
+        other: otherRegulations(),
+        estToll : estimatedToll()
     }
     return outputs;
 }
@@ -284,14 +329,21 @@ function outputs(results){
 
     document.querySelector('.row-3_row-2_row-2_el-2').innerHTML = Math.floor(output.optionals) + ' kr.';
 
-    document.querySelector('.row-3_row-1_column-4_el-3').innerHTML = Math.floor(output.deductedPrice) + ' kr.';
+    document.querySelector('.row-3_row-1_column-4_el-3').innerHTML = Math.floor(output.marketPrice) + ' kr.';
 
     document.querySelector('.row-3_row-1_column-3_el-2').innerHTML = Math.floor(output.fivePercent) + ' kr.';
-    document.querySelector('.row-3_row-2_row-5_el-2').innerHTML = Math.floor(output.finalPrice) + ' kr.'
+    document.querySelector('.row-3_row-2_row-5_el-2').innerHTML = Math.floor(output.finalPrice) + ' kr.';
 
-    document.querySelector('.row-3_row-2_row-1_el-2').innerHTML = Math.floor(output.conditionAndUse) + ' kr.'
+    document.querySelector('.row-3_row-2_row-1_el-2').innerHTML = Math.floor(output.conditionAndUse) + ' kr.';
 
+    document.querySelector('.row-3_row-2_row-3_el-2').innerHTML = Math.floor(output.kmRegulation) + ' kr.';
 
+    document.querySelector('.row-3_row-2_row-4_el-2').innerHTML = Math.floor(output.other.percent) + ' %'
+    document.querySelector('.row-3_row-2_row-4_el-4').innerHTML = Math.floor(output.other.otherRegulationSum) + ' kr.';
+
+    document.querySelector('.sales-price').innerHTML = Math.floor(output.finalPrice) + ' kr.';
+
+    document.querySelector('.est-toll').innerHTML = Math.floor(output.estToll) + ' kr.'
 }
 
 // Validates the calculator; checks if all inputs are filled in -------------------------
@@ -308,20 +360,18 @@ function validateForm() {
             e.style.background = null;
         }
     })
-
-
     return isValid;
 }
 
 // triggers everything ----------------------------------------------
 document.addEventListener('keyup', event=>{
     if (event.keyCode === 13) {
-       // if(validateForm()) {
+        if(validateForm()) {
 
             var inputs = getInputs();
             let calc = doCalculations(inputs)
             outputs(calc);
-      //  }
+        }
 
     }
 })

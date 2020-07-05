@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Beregner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    
+   
+    <form method="GET" class="container-sm p-0 py-4 my-4 border border rounded" >
+       
+        <div class="container-fluid row m-0 justify-content-between border-bottom">
+            <h1 class="display-4">Køretøjets data:</h1>
+            <div class="border p-2">
+                <div class="row col-12 align-items-center justify-content-between">
+                    <h2>Handelspris:</h2>
+                    <input class="form-control col-6" id="final-price-2" type="text" placeholder="Handelspris" readonly>
+                </div>
+                <div class="row col-12 align-items-center justify-content-between">
+                    <h2>Afgift:</h2>
+                    <input class="form-control col-6" id="estimated-toll-2" type="text" placeholder="Estimeret afgift" readonly>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="container-fluid row px-4 mx-0 pb-4 mt-4 border-bottom">
+            <div class="col-6 d-flex flex-column">
+
+                <div class="d-flex flex-column">
+                    <label for="registration">Registeringsdato</label>
+                    <input class="form-control" type="text" name="registration" id="registration" placeholder="dd-mm-åååå">
+                </div>
+                <label class="mt-4" for="vehicle-quality">Køretøjets stand</label>
+                <select class="custom-select" name="vehicle-quality" id="vehicle-quality">
+                    <option value="0.05">Over middel</option>
+                    <option value="-0.03">Middel</option>
+                    <option value="-0.08">Under middel</option>
+                </select>
+                <label class="mt-4" for="special-use">Særlig anvendelse</label>
+                <select class="custom-select" name="special-use" id="special-use">
+                    <option value="0">Standard</option>
+                    <option value="-0.05">Udlejning</option>
+                    <option value="-0.05">Taxi</option>
+                    <option value="-0.05">Køreskolebil</option>
+                    <option value="-0.05">Sygetransport</option>
+                    <option value="-0.05">Civilpolitibil</option>
+                    <option value="-0.05">Militærkøretøj</option>
+                </select>
+
+            </div>
+            <div class="col-6  d-flex flex-column">
+                <div class="d-flex flex-column">
+                    <label for="km-driven">Kørte kilometer</label>
+                    <input class="form-control" type="text" name="km-driven" id="km-driven" placeholder="Din bils kørte kilometer">
+                </div>
+                <div class="d-flex mt-4 flex-column">
+                    <label for="new-price">Nypris</label>
+                    <input class="form-control" type="text" name="new-price" id="new-price" placeholder="Din bils pris som ny">
+                  
+                </div>
+            </div>
+        </div>
+<!---------------------Markedsvurdering--------------------------------------------------  -->
+        <div class="container-fluid border-bottom px-4 pb-4">
+            <h2 class="col-12 my-4 text-center position-relative">Markedsvurdering
+                <button class="position-absolute fixed-top btn btn-primary">Tilføj annonce</button>
+            </h2>
+            
+            <div class="col-12 m-0 p-0 row">
+                <p class="col-3 h5">Bil fra annonce</p>
+                <p class="col-3 h5">Årgang</p>
+                <p class="col-3 h5">Udsalgspris</p>
+                <p class="col-3 h5">Kørte kilometer</p>
+            </div>
+            <div class="ads col-12 m-0 mt-4 p-0 row justify-content-between">
+                <p class="col-2 h5">Bil 1</p>
+                <input class="ad-year col-3 form-control h5" type="text" placeholder="ex: 2016">
+                <input class="ad-price col-3 form-control h5" type="text" placeholder="ex: 230000">
+                <input class="ad-km col-3 form-control h5" type="text" placeholder="ex: 96000">
+            </div>
+
+        </div>
+<!---------------------Udstyrsoversigt--------------------------------------------------  -->
+        <div class="container-fluid border-bottom px-4 pb-4 ">
+            <a href="#collapseExample" data-toggle="collapse">
+                <h2 class="col-12 my-4 text-center position-relative">Udstyrsoversigt
+                    <button class="position-absolute fixed-top btn btn-primary">Tilføj udstyr</button>
+                </h2>
+
+                <div class="col-12 m-0 p-0 row justify-content-between border-bottom" >
+                    <p class="col-1 border-right h5">Udstyr</p>
+                    <p class="col-1 border-right h5">Pris</p>
+                    <p class="col-1 border-right h5">Din bil</p>
+                    <p class="col-1 border-right h5">Bil 1</p>
+                    <p class="col-1 border-right h5">Bil 2</p>
+                    <p class="col-1 border-right h5">Bil 3</p>
+                    <p class="col-1 border-right h5">Bil 4</p>
+                    <p class="col-1 border-right h5">Bil 5</p>
+                    <p class="col-1 border-right h5">Bil 6</p>
+                    <p class="col-1 border-right h5">Bil 7</p>
+                    <p class="col-1 h5">Bil 8</p>
+                </div>
+            </a>
+            <div id="collapseExample" class="collapse">
+                <div class="optionals m-0 py-2 col-12 row justify-content-between" >
+                    <input class="col-1  form-control" type="text">
+                    <input class="col-1 form-control" type="text">
+                    <input class="col-1" type="checkbox" name="myCar" id="">
+                    <input class="col-1" type="checkbox" name="car-1" id="">
+                    <input class="col-1" type="checkbox" name="car-2" id="">
+                    <input class="col-1" type="checkbox" name="car-3" id="">
+                    <input class="col-1" type="checkbox" name="car-4" id="">
+                    <input class="col-1" type="checkbox" name="car-5" id="">
+                    <input class="col-1" type="checkbox" name="car-6" id="">
+                    <input class="col-1" type="checkbox" name="car-7" id="">
+                    <input class="col-1" type="checkbox" name="car-8" id="">
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid border-bottom px-4 pb-4 ">
+            <div class="col-12 row m-0 p-0 my-4 align-items-center">
+                <label class="col-7 m-0 p-0 h5" for="otherRegulation">Anden regulering til beregning. Ex.: anden model, motor, variant mm.</label>
+                <input class="form-control col-2" type="text" name="otherRegulation" id="otherRegulation">
+            </div>
+            <div class="col-12 p-0">
+
+                <textarea class="container-fluid p-2 border border-info" name="otherRegulationReason" id="otherRegulationReason" placeholder="Giv en begrundelse for reguleringen."></textarea>
+            </div>
+        </div>
+
+<!-----------------------------Calculations-------------------------------------------------->
+
+        <div class="container-fluid border-bottom p-4 row">
+            <div class="column col-6">
+                <p style="line-height: 1em;" class="h5 border-bottom py-1 my-4 ">Gennemsnitlig udsalgspris</p>
+                <p style="line-height: 1em;" class="h5 border-bottom py-1 my-4 ">Fradrag for gennemsnitlig rabat</p>
+                <p style="line-height: 1em;" class="h5 border-bottom py-1 my-4">Leveringsomkostninger</p>
+                <p style="line-height: 1em;" class="h5 border-bottom py-1 my-4">Gennemsnitlig kørte kilometer</p>
+                <p style="line-height: 1em;" class="h5 border-bottom py-1 my-4">Markedsværdi</p>
+            </div>
+            <div class="col-6">
+                <input class="form-control mt-2 " type="text" id="avg-sales-price" placeholder="Gennemsnitlig udsalgspris for bilen" readonly>
+                <input class="form-control mt-3" type="text" id="discount" placeholder="-5% af udsalgspris" readonly>
+                <input class="form-control mt-3" type="text" id="delivery-cost" value="-2000 kr." readonly>
+                <input class="form-control mt-3" type="text" id="avg-kilometers" placeholder="Modellens gennemsnitlige kørte kilometer" readonly>
+                <input class="form-control mt-3" type="text" id="deducted-price" placeholder="Udsalgspris efter faste fradrag" readonly>
+            </div>
+        </div>
+
+
+        <div class="container-fluid border-bottom px-4 pb-4 mx-0 row">
+            <h2 class="col-12 my-4 text-center position-relative">Udregninger</h2>
+            <div class="col-6">
+                <p style="line-height: 1em;" class="h5 px-0 py-1 my-4 col-12 border-bottom">Køretøjets stand + særlig anvendelse</p>
+                <p style="line-height: 1em;" class="h5 px-0 py-1 my-4 col-12 border-bottom">Regulering for udstyr</p>
+                <p style="line-height: 1em;" class="h5 px-0 py-1 my-4 col-12 border-bottom">Regulering for kilometer</p>
+                <p style="line-height: 1em;" class="h5 px-0 py-1 my-4 col-12 border-bottom">Årgangsregulering</p>
+                <p style="line-height: 1em;" class="h5 px-0 py-1 my-4 col-12 border-bottom">Anden Regulering</p>
+            </div>
+
+            <div class="col-6 d-flex flex-column align-items-end">
+                <input class="form-control mt-2" id="useAndQualityOutput" type="text" placeholder="Max 20.000 kr. i fradrag / max 8000 kr. i tillæg" readonly>
+                <input class="form-control mt-3" id="optionalsOutput" type="text" placeholder="Tillæg / fradrag" readonly>
+                <input" class="form-control mt-3" id="kmRegulationOutput" type="text" placeholder="Tillæg / fradrag" readonly>
+                <input class="form-control mt-3" id="yearRegulationOutput" type="text" placeholder="???" readonly>
+                <input class="form-control mt-3" id="otherRegulationOutput" type="text" placeholder="Anden regulering som procentdel af bilens markedsværdi" readonly>
+            </div>
+
+        </div>
+
+
+        <div class="container-fluid row justify-content-between my-4 align-items-center">
+            <p class="h5 bold col-3"><strong>Endelige priser</strong></p>
+           <div class="col-3">
+                <p class="h5">Handelspris</p>
+               <input class="form-control" type="text" id="final-price" placeholder="Endelig handelspris" readonly>
+            </div>
+            <div class="col-3">
+                <p class="h5">Afgift</p>
+                <input class="form-control" type="text" id="estimated-toll" placeholder="Forventede afgift" readonly>
+            </div>
+        </div>
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <script src="app.js"></script>
+</body>
+</html>
