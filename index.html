@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-    
-   
-    <form method="GET" class="container-sm p-0 py-4 my-4 border border rounded" >
-       
+
+
+
+
+    <form method="GET" class="container-sm p-0 pb-4 my-4 border border rounded position-relative" >
+        <div style="position: sticky; top: 0px; background: whitesmoke; z-index: 9001;" class="col-12 h5 p-4">
+            <a class="mr-4" href="#køretøjets-data">Køretøjets data</a>
+            <a class="mr-4" href="#udstyrsoversigt">Udstyrsoversigt</a>
+            <a href="#udregninger">Udregninger</a>
+        </div>
         <div class="container-fluid row m-0 justify-content-between border-bottom">
             <h1 class="display-4">Køretøjets data:</h1>
             <div class="border p-2">
@@ -26,12 +32,12 @@
             </div>
         </div>
 
-        <div class="container-fluid row px-4 mx-0 pb-4 mt-4 border-bottom">
+        <div id="køretøjets-data" class="container-fluid row px-4 mx-0 pb-4 mt-4 border-bottom">
             <div class="col-6 d-flex flex-column">
 
                 <div class="d-flex flex-column">
                     <label for="registration">Registeringsdato</label>
-                    <input class="form-control" type="text" name="registration" id="registration" placeholder="dd-mm-åååå">
+                    <input class="form-control" type="date" name="registration" id="registration">
                 </div>
                 <label class="mt-4" for="vehicle-quality">Køretøjets stand</label>
                 <select class="custom-select" name="vehicle-quality" id="vehicle-quality">
@@ -63,10 +69,10 @@
                 </div>
             </div>
         </div>
-<!---------------------Markedsvurdering--------------------------------------------------  -->
-        <div class="container-fluid border-bottom px-4 pb-4">
+<!---------------------Markedsvurdering---------------------------------------------------->
+        <div class="ads container-fluid border-bottom px-4 pb-4">
             <h2 class="col-12 my-4 text-center position-relative">Markedsvurdering
-                <button class="position-absolute fixed-top btn btn-primary">Tilføj annonce</button>
+                <button type="button" onclick="addAdvert(), addOptionalsLabel()" class="position-absolute fixed-top btn btn-primary">Tilføj annonce</button>
             </h2>
             
             <div class="col-12 m-0 p-0 row">
@@ -75,8 +81,8 @@
                 <p class="col-3 h5">Udsalgspris</p>
                 <p class="col-3 h5">Kørte kilometer</p>
             </div>
-            <div class="ads col-12 m-0 mt-4 p-0 row justify-content-between">
-                <p class="col-2 h5">Bil 1</p>
+            <div class="ad col-12 m-0 mt-4 p-0 row justify-content-between">
+                <p class="ad-number col-2 h5">Bil 1</p>
                 <input class="ad-year col-3 form-control h5" type="text" placeholder="ex: 2016">
                 <input class="ad-price col-3 form-control h5" type="text" placeholder="ex: 230000">
                 <input class="ad-km col-3 form-control h5" type="text" placeholder="ex: 96000">
@@ -84,47 +90,30 @@
 
         </div>
 <!---------------------Udstyrsoversigt--------------------------------------------------  -->
-        <div class="container-fluid border-bottom px-4 pb-4 ">
-            <a href="#collapseExample" data-toggle="collapse">
-                <h2 class="col-12 my-4 text-center position-relative">Udstyrsoversigt
-                    <button class="position-absolute fixed-top btn btn-primary">Tilføj udstyr</button>
-                </h2>
+        <div id="udstyrsoversigt" class="optionals-container container-fluid border-bottom px-4 pb-4 ">
+            <h2 class="col-12 my-4 text-center position-relative">Udstyrsoversigt
+                <button type="button" onclick="addOptional()" class="position-absolute fixed-top btn btn-primary">Tilføj udstyr</button>
+            </h2>
 
-                <div class="col-12 m-0 p-0 row justify-content-between border-bottom" >
-                    <p class="col-1 border-right h5">Udstyr</p>
-                    <p class="col-1 border-right h5">Pris</p>
-                    <p class="col-1 border-right h5">Din bil</p>
-                    <p class="col-1 border-right h5">Bil 1</p>
-                    <p class="col-1 border-right h5">Bil 2</p>
-                    <p class="col-1 border-right h5">Bil 3</p>
-                    <p class="col-1 border-right h5">Bil 4</p>
-                    <p class="col-1 border-right h5">Bil 5</p>
-                    <p class="col-1 border-right h5">Bil 6</p>
-                    <p class="col-1 border-right h5">Bil 7</p>
-                    <p class="col-1 h5">Bil 8</p>
-                </div>
-            </a>
-            <div id="collapseExample" class="collapse">
-                <div class="optionals m-0 py-2 col-12 row justify-content-between" >
-                    <input class="col-1  form-control" type="text">
-                    <input class="col-1 form-control" type="text">
-                    <input class="col-1" type="checkbox" name="myCar" id="">
-                    <input class="col-1" type="checkbox" name="car-1" id="">
-                    <input class="col-1" type="checkbox" name="car-2" id="">
-                    <input class="col-1" type="checkbox" name="car-3" id="">
-                    <input class="col-1" type="checkbox" name="car-4" id="">
-                    <input class="col-1" type="checkbox" name="car-5" id="">
-                    <input class="col-1" type="checkbox" name="car-6" id="">
-                    <input class="col-1" type="checkbox" name="car-7" id="">
-                    <input class="col-1" type="checkbox" name="car-8" id="">
-                </div>
+            <div class="optionals-labels col-12 m-0 p-0 row justify-content-between border-bottom" >
+                <p class="col-2 text-center h5">Udstyr</p>
+                <p class="col-1 h5 text-center">Pris</p>
+                <p class="col-1 text-center h5">Bil</p>
+                <p class="optionals-number col-1 text-center h5">Bil 1</p>
+            </div>
+        
+            <div class="optionals-inputs m-0 px-0 py-2 col-12 row justify-content-between" >
+                <input class="optionals-gear form-control col-2" type="text" placeholder="Radio...">
+                <input class="optionals-price form-control col-1" type="text" placeholder="25000">
+                <input class="my-optionals col-1" type="checkbox" name="myCar">
+                <input class="optionals col-1" type="checkbox" name="car-1">
             </div>
         </div>
 
         <div class="container-fluid border-bottom px-4 pb-4 ">
             <div class="col-12 row m-0 p-0 my-4 align-items-center">
-                <label class="col-7 m-0 p-0 h5" for="otherRegulation">Anden regulering til beregning. Ex.: anden model, motor, variant mm.</label>
-                <input class="form-control col-2" type="text" name="otherRegulation" id="otherRegulation">
+                <label class="col-7 m-0 p-0 h5" for="other-regulation">Anden regulering til beregning. Ex.: anden model, motor, variant mm.</label>
+                <input class="form-control col-2" type="text" name="other-regulation" id="other-regulation">
             </div>
             <div class="col-12 p-0">
 
@@ -134,7 +123,7 @@
 
 <!-----------------------------Calculations-------------------------------------------------->
 
-        <div class="container-fluid border-bottom p-4 row">
+        <div id="udregninger" class="container-fluid border-bottom mx-0 p-4 row">
             <div class="column col-6">
                 <p style="line-height: 1em;" class="h5 border-bottom py-1 my-4 ">Gennemsnitlig udsalgspris</p>
                 <p style="line-height: 1em;" class="h5 border-bottom py-1 my-4 ">Fradrag for gennemsnitlig rabat</p>
@@ -174,7 +163,7 @@
 
 
         <div class="container-fluid row justify-content-between my-4 align-items-center">
-            <p class="h5 bold col-3"><strong>Endelige priser</strong></p>
+            <p class="display-4 col-5">Endelige priser</p>
            <div class="col-3">
                 <p class="h5">Handelspris</p>
                <input class="form-control" type="text" id="final-price" placeholder="Endelig handelspris" readonly>
@@ -186,35 +175,7 @@
         </div>
 
     </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
@@ -227,6 +188,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-    <script src="app.js"></script>
+    <script src="app-2.js"></script>
 </body>
 </html>
