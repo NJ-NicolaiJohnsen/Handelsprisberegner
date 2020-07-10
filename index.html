@@ -9,13 +9,11 @@
 <body>
 
 
-
-
     <form method="GET" class="container-sm p-0 pb-4 my-4 border border rounded position-relative" >
         <div style="position: sticky; top: 0px; background: whitesmoke; z-index: 9001;" class="col-12 h5 p-4">
-            <a class="mr-4" href="#køretøjets-data">Køretøjets data</a>
-            <a class="mr-4" href="#udstyrsoversigt">Udstyrsoversigt</a>
-            <a href="#udregninger">Udregninger</a>
+            <span style="font-size: 1.25rem;" class="mr-4 btn btn-primary" onclick="topLevelLink('køretøjets-data')">Køretøjets data</span>
+            <span style="font-size: 1.25rem;" class="mr-4 btn btn-primary" onclick="topLevelLink('markedsvurdering')">Markedsvurdering</span>
+            <span style="font-size: 1.25rem;" class="mr-4 btn btn-primary" onclick="topLevelLink('udregninger')">Udregninger</span>
         </div>
         <div class="container-fluid row m-0 justify-content-between border-bottom">
             <h1 class="display-4">Køretøjets data:</h1>
@@ -25,8 +23,8 @@
                     <input class="form-control col-6" id="final-price-2" type="text" placeholder="Handelspris" readonly>
                 </div>
                 <div class="row col-12 align-items-center justify-content-between">
-                    <h2>Afgift:</h2>
-                    <input class="form-control col-6" id="estimated-toll-2" type="text" placeholder="Estimeret afgift" readonly>
+                    <h2>Nypris:</h2>
+                    <input class="form-control col-6" id="new-price-2" type="text" placeholder="Nypris" readonly>
                 </div>
                 
             </div>
@@ -70,54 +68,70 @@
             </div>
         </div>
 <!---------------------Markedsvurdering---------------------------------------------------->
-        <div class="ads container-fluid border-bottom px-4 pb-4">
+        <div id="markedsvurdering" class="container-fluid px-4 pb-2">
             <h2 class="col-12 my-4 text-center position-relative">Markedsvurdering
-                <button type="button" onclick="addAdvert(), addOptionalsLabel()" class="position-absolute fixed-top btn btn-primary">Tilføj annonce</button>
+                <div style="position: absolute; top: 0; left: 0;">
+                    <button type="button" onclick="addAdvert(), addOptionalsLabel(), addDeleteFunction()" id="ad-button" class="btn btn-primary">Tilføj annonce</button>
+                    <button type="button" onclick="addOptional(), addDeleteOptional()" id="optionals-button" class=" btn btn-primary">Tilføj udstyr</button>
+                </div>
             </h2>
-            
-            <div class="col-12 m-0 p-0 row">
-                <p class="col-3 h5">Bil fra annonce</p>
-                <p class="col-3 h5">Årgang</p>
-                <p class="col-3 h5">Udsalgspris</p>
-                <p class="col-3 h5">Kørte kilometer</p>
-            </div>
-            <div class="ad col-12 m-0 mt-4 p-0 row justify-content-between">
-                <p class="ad-number col-2 h5">Bil 1</p>
-                <input class="ad-year col-3 form-control h5" type="text" placeholder="ex: 2016">
-                <input class="ad-price col-3 form-control h5" type="text" placeholder="ex: 230000">
-                <input class="ad-km col-3 form-control h5" type="text" placeholder="ex: 96000">
-            </div>
 
+            <div class="ads row col m-0 p-0 pr-4 justify-content-between">
+                <div class="m-0 p-0 col-4">
+                    <p style="line-height: 1em;" class="mb-4 pb-2 h5">Køretøj fra annonce</p>
+                    <p style="line-height: 1em;" class="my-3 pb-2 h5 border-bottom">Årgang</p>
+                    <p style="line-height: 1em;" class="my-3 pb-2 h5 border-bottom">Udsalgspris</p>
+                    <p style="line-height: 1em;" class="my-3 pb-2 h5 border-bottom">Kørte kilometer</p>
+                    <p style="line-height: 1em;" class="my-3 pb-2 h5 border-bottom">Reguleret kilometertal</p>
+                </div>
+
+                <div style="display: none" class="ad-template m-0 col p-0">
+                    <div style="transform: translateY(-5px);" class="row m-0 p-0 justify-content-center align-items-center">
+                       <!-- <p class="ad-number h5 text-center">Bil 1</p> -->
+                        <button  class="btn btn-outline-dark" type="button">Slet</button>
+                    </div>
+                    <input  class="ad-year form-control h5" type="text" value="abc">
+                    <input class="ad-price form-control h5" type="text" value="abc">
+                    <input class="ad-km form-control h5" type="text" value="abc">
+                    <input class="ad-km-regulated form-control h5" type="text" readonly="true">
+                </div>
+
+            </div>
+            
         </div>
 <!---------------------Udstyrsoversigt--------------------------------------------------  -->
-        <div id="udstyrsoversigt" class="optionals-container container-fluid border-bottom px-4 pb-4 ">
-            <h2 class="col-12 my-4 text-center position-relative">Udstyrsoversigt
-                <button type="button" onclick="addOptional()" class="position-absolute fixed-top btn btn-primary">Tilføj udstyr</button>
-            </h2>
+        <div class="optionals-container container-fluid border-bottom px-4 pb-4 ">
+            <div class="optionals-labels col-12 m-0 pb-2 pl-0 pr-4 p-0 row justify-content-between border-bottom">
+                <div class="row mx-0 px-0 col-4">
+                    <p class="col-6 mx-0 px-0 h5">Udstyr</p>
+                    <p class="col-2 h5 text-center">Pris</p>
+                    <p class="col-4 text-center h5">Din bil</p>
+                </div>
 
-            <div class="optionals-labels col-12 m-0 p-0 row justify-content-between border-bottom" >
-                <p class="col-2 text-center h5">Udstyr</p>
-                <p class="col-1 h5 text-center">Pris</p>
-                <p class="col-1 text-center h5">Bil</p>
-                <p class="optionals-number col-1 text-center h5">Bil 1</p>
             </div>
+            
         
-            <div class="optionals-inputs m-0 px-0 py-2 col-12 row justify-content-between" >
-                <input class="optionals-gear form-control col-2" type="text" placeholder="Radio...">
-                <input class="optionals-price form-control col-1" type="text" placeholder="25000">
-                <input class="my-optionals col-1" type="checkbox" name="myCar">
-                <input class="optionals col-1" type="checkbox" name="car-1">
+            <divs style="display: none;" class="optionals-inputs-template m-0 mb-2 pl-0 pr-4 py-2 col-12 row justify-content-between" >
+                <div class="row mx-0 px-0 col-4">
+                    <input class="optionals-gear form-control col-6" type="text" value="abc">
+                    <input class="optionals-price form-control col-3" type="text"  value="abc">
+                    <input class="my-optionals col-3" type="checkbox">
+                </div>
+
+                <!--<input class="optionals col text-center" type="checkbox" name="car-1">-->
+                <button style="position: absolute; right: -1rem; z-index: 100;" class="optional-delete-btn btn btn-outline-dark"  type="button">Slet</button>
             </div>
+           
         </div>
 
         <div class="container-fluid border-bottom px-4 pb-4 ">
             <div class="col-12 row m-0 p-0 my-4 align-items-center">
                 <label class="col-7 m-0 p-0 h5" for="other-regulation">Anden regulering til beregning. Ex.: anden model, motor, variant mm.</label>
-                <input class="form-control col-2" type="text" name="other-regulation" id="other-regulation">
+                <input class="other-regulation form-control col-2" type="text" placeholder="%" name="other-regulation" id="other-regulation">
             </div>
             <div class="col-12 p-0">
 
-                <textarea class="container-fluid p-2 border border-info" name="otherRegulationReason" id="otherRegulationReason" placeholder="Giv en begrundelse for reguleringen."></textarea>
+                <textarea class="container-fluid p-2 border border-info" name="otherRegulationReason" id="otherRegulationReason" placeholder="Giv en begrundelse for reguleringen..."></textarea>
             </div>
         </div>
 
@@ -169,14 +183,13 @@
                <input class="form-control" type="text" id="final-price" placeholder="Endelig handelspris" readonly>
             </div>
             <div class="col-3">
-                <p class="h5">Afgift</p>
-                <input class="form-control" type="text" id="estimated-toll" placeholder="Forventede afgift" readonly>
+                <p class="h5">Nypris</p>
+                <input class="form-control new-price" type="text" placeholder="Nypris" readonly>
             </div>
         </div>
 
     </form>
     
-
 
 
 
@@ -191,3 +204,5 @@
     <script src="app-2.js"></script>
 </body>
 </html>
+
+

@@ -1,67 +1,136 @@
 
+function carIndex(item){
+        let adIndex = 0;
+        
+        item.forEach(car=>{
+            adIndex++;
+            car.innerHTML = 'Bil ' + adIndex;
+        })
+}
+
 function addAdvert(){
-    let advertContainer = document.querySelector('.ads');
-    let existingAdField = document.querySelector('.ad');
-
-    let newAdField = existingAdField.cloneNode(true);
-
-    let newAdChildren = newAdField.children;
-   
-
-    for (i=1; i< newAdChildren.length; i++){
-        newAdChildren[i].value = '';
+    
+    if (document.querySelectorAll('.ad').length < 7) {
+    
+        let advertContainer = document.querySelector('.ads');
+        let existingAdField = document.querySelector('.ad-template');
+    
+        let newAdField = existingAdField.cloneNode(true);
+        newAdField.style.display = 'block';
+        newAdField.className = newAdField.className.replace('ad-template', 'ad');
+        let newAdChildren = newAdField.children;
+        console.log(newAdChildren)
+        for (i=0; i< newAdChildren.length; i++){
+            
+            newAdChildren[i].value = "";
+            
+            newAdChildren[i].style.backgroundColor = null;
+            newAdChildren[i].placeholder = "";
+        }
+        
+        advertContainer.appendChild(newAdField);
+        
+        //carIndex(document.querySelectorAll('.ad-number'))
+       
     }
 
-    advertContainer.appendChild(newAdField);
-
-    let adNumber = document.querySelectorAll('.ad-number');
-    let adIndex = 0;
-
-    adNumber.forEach(car=>{
-        adIndex++;
-        car.innerHTML = 'Bil ' + adIndex;
-    })
-      
 }
+
+function addDeleteFunction(){
+    
+    let btns = document.querySelectorAll('.ad button');
+    btns[btns.length-1].addEventListener('click', deleteAdCar);
+}
+
+
+function deleteAdCar() {
+  
+    let adArray = [...document.querySelectorAll('.ad button')];
+    const myIndex = adArray.indexOf(this);
+    if (adArray.length > 1) {
+
+        this.parentElement.parentElement.remove()
+        document.querySelectorAll('.optionals-number')[myIndex].remove()
+        
+        document.querySelectorAll('.optionals-inputs').forEach(row=>{
+            row.querySelectorAll('.optionals')[myIndex].remove()
+        })
+        
+        //carIndex(document.querySelectorAll('.ad-number'))
+        carIndex(document.querySelectorAll('.optionals-number'))
+    }
+} 
+
+
+function addDeleteOptional(){
+    const btns = document.querySelectorAll('.optionals-inputs .optional-delete-btn');
+    btns[btns.length-1].addEventListener('click', deleteOptional)
+}
+
+
+function deleteOptional(){
+    let optionalsArray = [...document.querySelectorAll('.optionals-inputs .optional-delete-btn')];
+    if (optionalsArray.length > 1){
+        this.parentElement.remove()
+    }
+
+}
+
+
 
 function addOptionalsLabel(){
-    let optionalsLabels = document.querySelector('.optionals-labels');
-   
-    let newOptionalsLabel = document.createElement('p');
-    newOptionalsLabel.className = 'optionals-number h5 text-center col-1';
-    
-    optionalsLabels.appendChild(newOptionalsLabel);
-    let optionalsNumber = document.querySelectorAll('.optionals-number');
-    let optionalsIndex = 0;
-    optionalsNumber.forEach(optional=>{
-        optionalsIndex++;
-        optional.innerHTML = 'Bil '+optionalsIndex;
-    })
+     
 
-    let optionalsInputs = document.querySelectorAll('.optionals-inputs');
-    optionalsInputs.forEach(optional=>{
+    if (document.querySelectorAll('.optionals-number').length < 7) {
 
-        let newCheckbox = document.createElement('input');
-        newCheckbox.className = 'col-1 optionals';
-        newCheckbox.type = 'checkbox';
-        optional.appendChild(newCheckbox);
-    })
+        let optionalsLabels = document.querySelector('.optionals-labels');
+        
+        let newOptionalsLabel = document.createElement('p');
+        newOptionalsLabel.className = 'optionals-number h5 text-center col';
+        optionalsLabels.appendChild(newOptionalsLabel);
 
+        carIndex(document.querySelectorAll('.optionals-number'))
+        
+        let optionalsInputs = document.querySelectorAll('.optionals-inputs');
+        optionalsInputs.forEach(optional=>{
 
+            let newCheckbox = document.createElement('input');
+            newCheckbox.className = 'col optionals';
+            newCheckbox.type = 'checkbox';
+            optional.appendChild(newCheckbox);
+        })
+    }
 }
+
 
 function addOptional(){
-    let optionalsContainer = document.querySelector('.optionals-container');
-    let optionalsInputs = document.querySelector('.optionals-inputs');
-    let newInputs = optionalsInputs.cloneNode(true);
-    newInputsChildren = newInputs.children;
 
-    for (i=0; i< newInputsChildren.length; i++){
-        newInputsChildren[i].value = '';
-        newInputsChildren[i].checked = false;
+    function OptionalConditional(conditionalItem){
+        let container = document.querySelector('.optionals-container');
+        let existingOptional = document.querySelector(`.${conditionalItem}`)
+        let newInputs = existingOptional.cloneNode(true);
+
+        newInputs.style.display = 'flex';
+        newInputs.className = newInputs.className.replace('optionals-inputs-template', 'optionals-inputs');
+
+        newInputsChildren = newInputs.children;
+        newInputsChildren[1].checked = false;
+        newInputsChildren[0].children[2].checked = false;
+        newInputsChildren[0].children[0].value = '';
+        newInputsChildren[0].children[1].value = '';
+        newInputsChildren[0].children[0].style.backgroundColor = null;
+        newInputsChildren[0].children[1].style.backgroundColor = null;
+        container.appendChild(newInputs)
     }
-    optionalsContainer.appendChild(newInputs);
+
+    if (document.querySelector('.optionals-inputs')) {
+        OptionalConditional('optionals-inputs')
+    } else {
+        OptionalConditional('optionals-inputs-template')
+    }
+
 }
+
 
 
 //INPUTS ----------------------------------------------------------------------------------
@@ -78,7 +147,7 @@ function getInputs(){
     let optionalsArray = [];
     document.querySelectorAll('.optionals-inputs').forEach(e=>{
         optionalsArray.push({
-            gear: parseFloat(e.querySelector('.optionals-gear').value),
+            gear: e.querySelector('.optionals-gear').value,
             price: parseFloat(e.querySelector('.optionals-price').value),
             myCar: e.querySelector('.my-optionals'),
             fields: e.querySelectorAll('.optionals')
@@ -111,8 +180,7 @@ function getInputs(){
 // CALCULATIONS ------------------------------------------------------------
 function doCalculations(inputs){
     let data = inputs;
-    
-  
+ 
     function myCarYear(){
         let year = new Date(data.myCarDate).getFullYear();
         let today = new Date().getFullYear();
@@ -143,7 +211,7 @@ function doCalculations(inputs){
         return priceAvg;
     }
    
-    //Vognkort --------------
+    //Vognkort -----------------------------------------------------------------------------
     function averageKilometers(){
         let myCarAge = myCarYear();
 
@@ -156,17 +224,25 @@ function doCalculations(inputs){
         data.ads.forEach(ad=>{
             kmDriven.push(ad.km)
         })
+
         data.ads.forEach(ad=>{
             adCarAge.push(thisYear-ad.years)
         })
 
         let kmAvg = 0;
-
+        let eachCarRegulated = {};
         for (i=0; i< kmDriven.length; i++) {
             kmAvg += (kmDriven[i] / adCarAge[i] * myCarAge) / kmDriven.length;
+            let key = 'car_'+i;
+            eachCarRegulated[key] = kmDriven[i] / adCarAge[i] * myCarAge;
         }
 
-        return kmAvg;
+        let returnObject = {
+            avg: kmAvg,
+            eachCar: eachCarRegulated
+        }
+
+        return returnObject;
     }
  
 
@@ -185,12 +261,10 @@ function doCalculations(inputs){
         for (i=0; i<data.optionals.length; i++){
             for (j=0; j<data.optionals[i].fields.length; j++){
                 if (data.optionals[i].fields[j].checked) {
-                   //console.log(data.optionals[i].price);
                     let carKey = 'car_'+j;
                     let price = data.optionals[i].price;
                     price += optionalSums[carKey] ? parseFloat(optionalSums[carKey]) : 0;
                     optionalSums[carKey] = price;
-                    //console.log(price)
                 }
             }
         }
@@ -230,7 +304,7 @@ function doCalculations(inputs){
     }
 
 
-    // Most price calculation is done under here
+    // Most price calculation is done under here --------------------------------------------------
     function fivePercentDeduction(){
         let deduction = averageSalesPrice()*-0.05;
         return deduction;
@@ -312,17 +386,17 @@ function doCalculations(inputs){
         }
 
         function calcRegulation(){
-            let age = myCarYearMonth();
-            let marketPrice = deductedPrice();
-            let avgKm = averageKilometers();
-            let myCarKm = data.myCarKm;
-            let kmDif = kmDifference(avgKm, myCarKm);
-            let deviation = kmDeviation(avgKm, myCarKm); 
-            let pLevel = priceLevel(marketPrice, kmDif, ageRate(age));
-            let pLevel10 = priceLevel10(marketPrice, deviation)
-            let pLevel50 = priceLevel50(pLevel, pLevel10)
+            const age = myCarYearMonth();
+            const marketPrice = deductedPrice();
+            const avgKm = averageKilometers().avg;
+            const myCarKm = data.myCarKm;
+            const kmDif = kmDifference(avgKm, myCarKm);
+            const deviation = kmDeviation(avgKm, myCarKm); 
+            const pLevel = priceLevel(marketPrice, kmDif, ageRate(age));
+            const pLevel10 = priceLevel10(marketPrice, deviation)
+            const pLevel50 = priceLevel50(pLevel, pLevel10)
             // if priceLevel is over 10 % of market price 
-            let overTenPercentOfPrice = pLevel10 + pLevel50;
+            const overTenPercentOfPrice = pLevel10 + pLevel50;
             
             if (age < 10) {
                 if (deviation < 0.1 && deviation > -0.1) {
@@ -342,8 +416,8 @@ function doCalculations(inputs){
                         }
                     }
                 }
-            }
-             else {
+            } 
+            else {
                 if (deviation < 0.33 && deviation > -0.33) {
                     return 0;
                 } else {
@@ -367,11 +441,17 @@ function doCalculations(inputs){
         return calcRegulation();
     }
     
+    
 
     function otherRegulations(){
         let percent = data.other/100;
         let marketPrice = deductedPrice();
-
+        if (Number.isNaN(data.other)){
+            percent = 0;
+            
+        } else {
+            throw "Something went wrong"
+        }
         
         let results = {
             otherRegulationSum: marketPrice*percent,
@@ -385,8 +465,8 @@ function doCalculations(inputs){
         return price;
     }
 
-    function estimatedToll(){
-        return finalPrice()*0.57;
+    function newPriceCalc(){
+        return myOptionalsCalc()+data.newPrice;
     }
 
     let outputs = {
@@ -398,7 +478,7 @@ function doCalculations(inputs){
         conditionAndUse: conditionAndUse(),
         kmRegulation: kmRegulation(),
         other: otherRegulations(),
-        estToll : estimatedToll(),
+        newPrice: newPriceCalc(),
         avgKm: averageKilometers()
     }
     return outputs;
@@ -410,11 +490,10 @@ function outputs(results){
     let output = results;
 
     document.querySelector('#final-price').value = Math.floor(output.finalPrice) + ' kr.'
-
     document.querySelector('#final-price-2').value = Math.floor(output.finalPrice) + ' kr.'
 
-    document.querySelector('#estimated-toll').value = Math.floor(output.estToll) + ' kr.';
-    document.querySelector('#estimated-toll-2').value = Math.floor(output.estToll) + ' kr.';
+    document.querySelector('#new-price-2').value = Math.floor(output.newPrice) + ' kr.';
+    document.querySelector('.new-price').value = Math.floor(output.newPrice) + ' kr.';
     document.querySelector('#useAndQualityOutput').value = Math.floor(output.conditionAndUse) + ' kr.'
     document.querySelector('#optionalsOutput').value = Math.floor(output.optionals) + ' kr.'
     document.querySelector('#kmRegulationOutput').value = Math.floor(output.kmRegulation) + ' kr.'
@@ -422,9 +501,20 @@ function outputs(results){
     document.querySelector('#discount').value = Math.floor(output.fivePercent) + ' kr.'
     document.querySelector('#avg-sales-price').value = Math.floor(output.avgPrice) + ' kr.'
     document.querySelector('#deducted-price').value = Math.floor(output.marketPrice) + ' kr.'
-    document.querySelector('#avg-kilometers').value = Math.floor(output.avgKm) + ' kr.'
-    
+    document.querySelector('#avg-kilometers').value = Math.floor(output.avgKm.avg) + ' kr.'
 
+    function eachCarKmRegulation(){
+        let adKmRegulated =  document.querySelectorAll('.ad-km-regulated');
+        let index = 0;
+        adKmRegulated.forEach(ad =>{
+            let key = 'car_'+index;
+            let str = ' km'
+            let outputValue = Math.floor(output.avgKm.eachCar[key])
+            ad.value = `${outputValue}`.concat(str)
+            index++
+        })
+    }
+    eachCarKmRegulation()
 }
 
 // Validates the calculator; checks if all inputs are filled in -------------------------
@@ -432,28 +522,47 @@ function validateForm() {
     let isValid = true;
 
     let inputs = document.querySelectorAll('input');
-
+   
     inputs.forEach(function(e){
-        if (e.value == '') {
-            isValid = false;
-            e.style.background = 'red';
-        } else {
-            e.style.background = null;
+        
+        if (!e.hasAttribute("readonly") && e.name !='other-regulation' ){
+            
+            if (e.value == '') {
+               
+                isValid = false;
+                e.style.background = 'red';
+                console.log(e)
+            } else {
+                e.style.background = null;
+            }
         }
+       
     })
+    console.log(isValid)
     return isValid;
 }
 
-// triggers everything ----------------------------------------------
+// triggers everything -------------------------------------------------------------------------
 document.addEventListener('keyup', event=>{
-    
     if (event.keyCode === 13) {
-      //  if(validateForm()) {
-
+        if(validateForm()) {
+            
             var inputs = getInputs();
             let calc = doCalculations(inputs)
             outputs(calc);
-        //}
+        }
 
     }
 })
+
+
+function topLevelLink(id){
+    let item = document.querySelector('#' + id + '').offsetTop
+    window.scrollTo({top: item-82, behavior: 'smooth'})
+
+}
+
+for (i = 0; i<1; i++){
+    document.getElementById('optionals-button').click();
+    document.getElementById('ad-button').click();
+}
